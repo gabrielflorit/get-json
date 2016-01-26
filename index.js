@@ -1,5 +1,5 @@
 // from http://youmightnotneedjquery.com/
-export default function getJSON(url, callback) {
+export default function getJSON(url, callback, error) {
 
 	var request = new XMLHttpRequest();
 	request.open('GET', url, true);
@@ -11,12 +11,12 @@ export default function getJSON(url, callback) {
 			callback(data);
 		} else {
 			// We reached our target server, but it returned an error
-
+			error(request.statusText);
 		}
 	};
 
 	request.onerror = function() {
-		// There was a connection error of some sort
+		error(request.statusText);
 	};
 
 	request.send();
