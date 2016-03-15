@@ -1,5 +1,5 @@
 // from http://youmightnotneedjquery.com/
-export default function getJSON(url, callback, error) {
+export default function getJSON(url, callback) {
 
 	var request = new XMLHttpRequest();
 	request.open('GET', url, true);
@@ -8,15 +8,15 @@ export default function getJSON(url, callback, error) {
 		if (request.status >= 200 && request.status < 400) {
 			// Success!
 			var data = JSON.parse(request.responseText);
-			callback(data);
+			callback(null, data);
 		} else {
 			// We reached our target server, but it returned an error
-			error(request.statusText);
+			error(request.statusText, null);
 		}
 	};
 
 	request.onerror = function() {
-		error(request.statusText);
+		error(request.statusText, null);
 	};
 
 	request.send();
